@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+body{
+    background-color: #f4f4f4;
+    font-family: 'Lato', sans-serif;
+}
+
+.main-color-bg{
+    background-color: rgb(33,37,41) !important;
+    color: #ffffff;
+}
+
+
+.list-group-item{
+    border-color:rgb(33,37,41) !important;
+    display: flex;
+    align-items: center;
+}
+
+.list-group-item .fas{
+    margin-right: 2%;
+}
+
+.list-group-item .badge{
+    margin-left: auto;
+}
+
+.navbar-nav{
+    min-height: 30px !important;
+    margin-bottom: 0;
+    border-radius: 0;
+}
+
+
+
+.navbar-brand{
+    font-size: 1.5rem !important;
+}
+
+#header{
+    background-color: grey;
+    color: #ffffff;
+    padding: 10px;
+    margin-bottom:15px;
+}
+
+.header-small{
+    color: #4f4c4c;
+}
+
+.breadcrumb{
+    color:#333333;
+    background-color: #cccccc;
+    padding:15px;
+}
+
+#overview a{
+    color:#333333;
+    text-decoration: none;
+}
+
+#main .row .card{
+    padding:0;
+}
+
+.well{
+    border-radius: 5px;
+    background-color: #cccccc;
+    padding: 7%;
+    text-align: center;
+}
+
+footer{
+    background-color: rgb(33,37,41);
+    color: #ffffff;
+    margin-top: 1%;
+    padding-bottom:1.5% ;
+    padding-top:1.5% ;
+    display: grid;
+    place-items: center;
+}
+
+.action-button{
+    display: inline-block;
+}
+
+th, td{
+    text-align: center !important;
+}
+
+#studentTable{
+    background-color: #ffffff;
+}
+
+#studentTable_wrapper{
+    background-color: #ffffff;
+}
+
+.caution-message{
+    color: red;
+    font-weight: bolder;
+}

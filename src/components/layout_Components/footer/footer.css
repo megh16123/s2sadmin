@@ -1,0 +1,15 @@
+footer{
+    background-color: rgb(33,37,41);
+    color: #ffffff;
+    margin-top: 1%;
+    padding-bottom:1.5% ;
+    padding-top:1.5% ;
+    display: grid;
+    place-items: center;
+}
+
+.position-fixed{
+    position:fixed;
+    bottom:0;
+    width: 100%;
+}

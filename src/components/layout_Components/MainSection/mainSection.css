@@ -1,0 +1,37 @@
+
+#overview a{
+    color:#333333;
+    text-decoration: none;
+}
+
+#main .row .card{
+    padding:0;
+}
+
+.well{
+    border-radius: 5px;
+    background-color: #cccccc;
+    padding: 7%;
+    text-align: center;
+}
+
+.action-button{
+    display: inline-block;
+}
+
+th, td{
+    text-align: center !important;
+}
+
+#studentTable{
+    background-color: #ffffff;
+}
+
+#studentTable_wrapper{
+    background-color: #ffffff;
+}
+
+.caution-message{
+    color: red;
+    font-weight: bolder;
+}
