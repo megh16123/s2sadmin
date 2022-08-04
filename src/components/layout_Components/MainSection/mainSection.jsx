@@ -1,5 +1,5 @@
 import React from "react";
-import Overview from './overview/Overview';
+import Overview from "./overview/overview";
 import MainTable from "./mainTable/MainTable";
 
 import "./mainSection.css";

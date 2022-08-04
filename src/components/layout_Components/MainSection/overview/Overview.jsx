@@ -131,6 +131,13 @@ function Overview(props) {
             <i className="fas fa-cog"></i> Dashboard
           </NavLink>
           <NavLink
+            to="/enrollment"
+            className="list-group-item list-group-item-action"
+          >
+            <i className="fas fa-chalkboard-teacher"></i> Enrollment{" "}
+            {/* <span className="badge bg-secondary ">{teacherCount}</span> */}
+          </NavLink>
+          <NavLink
             to="/student"
             className="list-group-item list-group-item-action"
           >

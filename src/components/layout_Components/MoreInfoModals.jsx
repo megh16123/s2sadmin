@@ -3,12 +3,15 @@ import Button from "react-bootstrap/Button";
 import Form from 'react-bootstrap/Form';
 import Modal from "react-bootstrap/Modal";
 import axios from "axios";
+import { FOCUSABLE_SELECTOR } from "@testing-library/user-event/dist/utils";
 
-function MoreInfo({ data, email, page }) {
+function MoreInfo({ data, email, page, classesJoined }) {
   // For Modal 1
   const [show, setShow] = useState(false);
   const [student, setStudent] = useState({});
   const [teacher, setTeacher] = useState({});
+  const [message, setMessage] = useState({});
+  const [enrollment, setEnrollment] = useState({});
   const [fees, setfee] = useState(0);
   const [salary, setSalary] = useState(0);
   const handleClose = () => setShow(false);
@@ -40,7 +43,7 @@ function MoreInfo({ data, email, page }) {
           setStudent({});
         }
       }
-      else if (page === "teacher") {
+      if (page === "teacher") {
         try {
 
           setTeacher(data);
@@ -49,10 +52,25 @@ function MoreInfo({ data, email, page }) {
           setTeacher({});
         }
       }
+      if (page === "home") {
+        try {
+          setMessage(data);
+          console.log(message);
+        } catch (error) {
+          setMessage({})
+        }
+      }
+      if (page === "enrollment") {
+        try {
+          setEnrollment(data);
+        } catch (error) {
+          setEnrollment({})
+        }
+      }
     };
 
     fetchData();
-  }, [data, email, page]);
+  }, [data, email, page, message]);
   const renderDat = () => {
     if (page === 'student') {
       return (
@@ -67,7 +85,7 @@ function MoreInfo({ data, email, page }) {
           Fee Due : {totalfee - student.feepaid}
         </>
       )
-    } else {
+    } if (page === 'teacher') {
       return (
         <>
           Name: {teacher.name}
@@ -81,6 +99,33 @@ function MoreInfo({ data, email, page }) {
           Address : {teacher.address}
           <br />
           Subject: {teacher.subject}
+        </>
+      )
+    }
+    if (page === "home") {
+      console.log(message);
+      return (
+        <>
+          Name: {message.name}
+          <br />
+          Email: {message.email}
+          <br />
+          Message: {message.message}
+          <br />
+        </>
+      )
+    }
+    if (page === "enrollment") {
+      return (
+        <>
+          Name: {enrollment.name}
+          <br />
+          Email: {enrollment.email}
+          <br />
+          Phone: {enrollment.phone}
+          <br />
+          Classes: {classesJoined}
+          <br />
         </>
       )
     }
@@ -101,13 +146,30 @@ function MoreInfo({ data, email, page }) {
     } catch (error) {
       setfee(0);
     }
+    if (page === "teacher") {
+      try {
+        const result = await axios.post("https://s2sapi.herokuapp.com/teachers/updateteacher", { email: teacher.email, salary: salary });
+        if (result.status === 200) {
+          handleShow3();
+          handleClose2();
+        }
+        else {
+          console.error(result.error);
+        }
+      } catch (error) {
+        console.error(error.message)
+      }
+    }
   }
 
   return (
     <>
       {/* Modal 1 */}
       <Button variant="dark" onClick={handleShow}>
-        More Info
+        {page === 'home' && `Read message`}
+        {page === 'enrollment' && `View Registeration`}
+        {page === 'student' && `More Info`}
+        {page === 'teacher' && `More Info`}
       </Button>
 
       <Modal
@@ -117,26 +179,103 @@ function MoreInfo({ data, email, page }) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>{teacher.name}</Modal.Title>
+          {page === 'home' && <Modal.Title>{"Read message"}</Modal.Title>}
+          {page === 'enrollment' && <Modal.Title>{"View Registeration"}</Modal.Title>}
+          {page === 'student' && <Modal.Title>{student.name}</Modal.Title>}
+          {page === 'teacher' && <Modal.Title>{teacher.name}</Modal.Title>}
+
         </Modal.Header>
         <Modal.Body>
           {renderDat()}
 
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button
-            variant="dark"
-            onClick={() => {
-              handleShow2();
-              handleClose();
-            }}
-          >
-            {page === "student" && `Mark Fee Submission`}
-            {page === "teacher" && `Mark Salary`}
-          </Button>
+          {page === "home" && message.responded !== true &&
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+          }
+          {page === "enrollment" && enrollment.responded !== true &&
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+          }
+          {page === "home" && message.responded === true && `Already seen`}
+          {page === "enrollment" && enrollment.responded === true && `Already seen`}
+          {page === "home" && message.responded === false &&
+            <Button
+              variant="dark"
+              onClick={async () => {
+                // if (page !== "home") {
+                //   handleShow2();
+                //   handleClose();
+                // }
+                if (page === 'home') {
+                  try {
+                    const result = await axios.post(
+                      "https://s2sapi.herokuapp.com/contactus/markresponse", { id: message._id, }
+                    );
+                    if (result.status === 200) {
+                      handleClose()
+                    }
+                  } catch (error) {
+                    console.log(error.message);
+                  }
+                }
+              }}
+            >
+              Mark as read
+            </Button>
+          }
+          {page === "enrollment" && enrollment.responded !== true &&
+            <Button
+              variant="dark"
+              onClick={async () => {
+                // if (page !== "home") {
+                //   handleShow2();
+                //   handleClose();
+                // }
+                if (page === 'home') {
+                  try {
+                    const result = await axios.post(
+                      "https://s2sapi.herokuapp.com/student/markresponse", { id: enrollment._id, }
+                    );
+                      console.log(result.status)
+                    if (result.status === 200) {
+                      handleClose()
+                    }
+                  } catch (error) {
+                    console.log(error.message);
+                  }
+                }
+              }}
+            >
+              Mark as read
+            </Button>
+          }
+
+          {page === "student" &&
+            <Button
+              variant="dark"
+              onClick={async () => {
+                  handleShow2();
+                  handleClose();
+              }}
+            >
+              Mark Fee Submission
+            </Button>
+          }
+          {page === "teacher" &&
+            <Button
+              variant="dark"
+              onClick={async () => {
+                  handleShow2();
+                  handleClose();
+              }}
+            >
+              Mark Salary
+            </Button>
+          }
         </Modal.Footer>
       </Modal>
 

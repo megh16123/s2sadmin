@@ -53,6 +53,11 @@ function Header(props) {
                   Teachers
                 </NavLink>
               </li>
+              <li className="nav-item pe-4">
+                <NavLink className="nav-link" to="/enrollment">
+                  Enrollment
+                </NavLink>
+              </li>
               <li className="nav-item">
                 <NavLink onClick={()=>{
                   sessionStorage.removeItem("token");
