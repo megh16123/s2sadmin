@@ -3,7 +3,6 @@ import Button from "react-bootstrap/Button";
 import Form from 'react-bootstrap/Form';
 import Modal from "react-bootstrap/Modal";
 import axios from "axios";
-import { FOCUSABLE_SELECTOR } from "@testing-library/user-event/dist/utils";
 
 function MoreInfo({ data, email, page, classesJoined }) {
   // For Modal 1
@@ -148,7 +147,7 @@ function MoreInfo({ data, email, page, classesJoined }) {
     }
     if (page === "teacher") {
       try {
-        const result = await axios.post("https://s2sapi.herokuapp.com/teachers/updateteacher", { email: teacher.email, salary: salary });
+        const result = await axios.post("https://s2sapi.herokuapp.com/teacher/updateteacher", { email: teacher.email, salary: salary });
         if (result.status === 200) {
           handleShow3();
           handleClose2();
@@ -235,7 +234,7 @@ function MoreInfo({ data, email, page, classesJoined }) {
                 //   handleShow2();
                 //   handleClose();
                 // }
-                if (page === 'home') {
+                if (page === 'enrollment') {
                   try {
                     const result = await axios.post(
                       "https://s2sapi.herokuapp.com/student/markresponse", { id: enrollment._id, }
