@@ -235,13 +235,12 @@ function MoreInfo({ data, email, page, classesJoined }) {
                 //   handleClose();
                 // }
                 if (page === 'enrollment') {
-                  console.log("Success")
                   try {
-                    const result = await axios.post(
+                    const resultEnrollment = await axios.post(
                       "https://s2sapi.herokuapp.com/student/markresponse", { id: enrollment._id, }
                     );
-                      console.log(result.status)
-                    if (result.status === 200) {
+                      console.log(resultEnrollment.status)
+                    if (resultEnrollment.status === 200) {
                       handleClose()
                     }
                   } catch (error) {
