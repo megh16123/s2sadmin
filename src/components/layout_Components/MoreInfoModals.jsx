@@ -229,12 +229,8 @@ function MoreInfo({ data, email, page, classesJoined }) {
           {page === "enrollment" && enrollment.responded !== true &&
             <Button
               variant="dark"
-              onClick={async () => {
-                // if (page !== "home") {
-                //   handleShow2();
-                //   handleClose();
-                // }
-                if (page === 'enrollment') {
+              onClick={async() => {
+               console.log(enrollment);
                   try {
                     const resultEnrollment = await axios.post(
                       "https://s2sapi.herokuapp.com/student/markresponse", { id: enrollment._id, }
@@ -246,7 +242,7 @@ function MoreInfo({ data, email, page, classesJoined }) {
                   } catch (error) {
                     console.log(error.message);
                   }
-                }
+                
               }}
             >
               Mark as read
