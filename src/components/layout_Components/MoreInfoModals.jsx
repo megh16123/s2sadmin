@@ -237,7 +237,7 @@ function MoreInfo({ data, email, page, classesJoined }) {
                 if (page === 'enrollment') {
                   try {
                     const result = await axios.post(
-                      "https://s2sapi.herokuapp.com/student/markresponse", { id: enrollment._id, }
+                      "http://localhost:3001/student/markresponse", { id: enrollment._id, }
                     );
                       console.log(result.status)
                     if (result.status === 200) {
