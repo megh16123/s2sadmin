@@ -51,7 +51,14 @@ const EditInfoModals = ({ data, page }) => {
             try {
                 const result = await axios.post('https://s2sapi.herokuapp.com/student/update', data);
                 if (result.status === 200) {
-                    handleClose()
+                    const courses = data.classes.split(",");
+                    courses.forEach(async(course)=>{
+                        const res = await axios.post('https://s2sapi.herokuapp.com/classes/join',{email:data.email,class:course})
+                        if(res.status === 200){
+        handleClose()
+
+    }
+    })
                     console.log(result.status)
                 }
             } catch (error) {
