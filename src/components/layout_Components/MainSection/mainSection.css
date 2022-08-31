@@ -35,3 +35,16 @@ th, td{
     color: red;
     font-weight: bolder;
 }
+
+.tableHeaderDiv{
+    background-color: #202529;
+    display: flex;
+    justify-content: space-between;
+    padding:1%;
+}
+
+.search_input{
+    width:40%;
+    border-radius: 5px;
+    padding-left:1%;
+}

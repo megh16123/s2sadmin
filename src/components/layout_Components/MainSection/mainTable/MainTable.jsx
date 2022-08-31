@@ -1,14 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import EditInfoModals from "../../EditInfoModals";
 import MoreInfo from "../../MoreInfoModals";
 import RemoveModals from "../../RemoveModals";
 
+var searchedData="";
 function MainTable(props) {
     const style = {
         backgroundColor: "#cccccc !important"
     };
+    
+    const search = (rows)=>{
+        return rows.filter(row=>row.name.toLowerCase().indexOf(searchQuery)>-1)  
+    }
 
-    const [data, setData] = useState([]);
+const searchEventHandler = (query)=>{
+    setSearchQuery(query);
+    searchedData = search(data);
+}
+
+const [data, setData] = useState([]);
+    const [searchQuery, setSearchQuery] = useState("");
     useEffect(() => {
         const fetchData = async () => {
             if (props.page === "teacher") {
@@ -44,8 +55,24 @@ function MainTable(props) {
         fetchData();
 
     }, [props]);
-    const datafilt = () => {
-        if (props.page === "student") {
+
+    const datafilt = useCallback(() => {
+        console.log(searchQuery);
+        console.log("searched data",searchedData.length);
+        console.log(searchedData);
+        console.log("dataa",data);
+        if (props.page === "student" && searchedData.length > 0 && searchQuery !== "") {
+            return (searchedData.map((item, index) => (
+                <tr key={index}>
+                    <th scope="row">{index + 1}</th>
+                    <td>{item.name}</td>
+                    <td>{item.classenrolled.join(",")}</td>
+                    <td><RemoveModals email={item.email} data={item} page={props.page} />&nbsp;&nbsp;<MoreInfo data={item} page={props.page} />
+                        &nbsp;&nbsp;<EditInfoModals page={props.page} data={item} /></td>
+                </tr>
+            )))
+        }
+        if (props.page === "student" && searchQuery === "") {
             return (data.map((item, index) => (
                 <tr key={index}>
                     <th scope="row">{index + 1}</th>
@@ -56,10 +83,19 @@ function MainTable(props) {
                 </tr>
             )))
         }
-        if (props.page === "teacher") {
+        if (props.page === "teacher" && searchedData.length > 0 && searchQuery !== "") {
+            return (searchedData.map((item, index) => (
+                <tr key={index}>
+                    <td>{index}</td>
+                    <td>{item.name}</td>
+                    <td>{item.subject}</td>
+                    <td><RemoveModals email={item.email} data={item} page={props.page} />&nbsp;&nbsp;<MoreInfo data={item} amount={item.salary} page={props.page} />&nbsp;&nbsp;<EditInfoModals page={props.page} data={item} /></td>
+                </tr>
+            )))
+        }
+        if (props.page === "teacher" && searchQuery === "") {
             return (data.map((item, index) => (
                 <tr key={index}>
-
                     <td>{index}</td>
                     <td>{item.name}</td>
                     <td>{item.subject}</td>
@@ -77,7 +113,8 @@ function MainTable(props) {
                 </tr>
             )))
         }
-        if (props.page === "enrollment") {
+        
+        if (props.page === "enrollment" ) {
             return (data.map((item, index) => (
                 <tr key={index}>
                     <td>{index + 1}</td>
@@ -89,11 +126,14 @@ function MainTable(props) {
                 </tr>
             )))
         }
-    }
+    },[data,props.page,searchQuery]);
     return (
         <div className="container">
             <div className="card mt-3">
+            <div className="tableHeaderDiv">
                 <h5 className="card-header main-color-bg">{props.tableHeading}</h5>
+                    {(props.page==="student" || props.page==="teacher")&& <input className="search_input" type="text" placeholder="seacrh by name" value={searchQuery} onChange={e=>searchEventHandler(e.target.value)} />}
+            </div>
                 <div className="card-body p-2">
                     <div className="col-md-12" style={style}>
                         <table className="table table-hover m-0" id="dataTable">
