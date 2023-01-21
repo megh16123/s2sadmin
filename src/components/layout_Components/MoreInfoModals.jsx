@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
-import Form from 'react-bootstrap/Form';
+import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import axios from "axios";
 
@@ -44,7 +44,6 @@ function MoreInfo({ data, email, page, classesJoined }) {
       }
       if (page === "teacher") {
         try {
-
           setTeacher(data);
           setSalary(data.salary);
         } catch (error) {
@@ -56,14 +55,14 @@ function MoreInfo({ data, email, page, classesJoined }) {
           setMessage(data);
           console.log(message);
         } catch (error) {
-          setMessage({})
+          setMessage({});
         }
       }
       if (page === "enrollment") {
         try {
           setEnrollment(data);
         } catch (error) {
-          setEnrollment({})
+          setEnrollment({});
         }
       }
     };
@@ -71,7 +70,7 @@ function MoreInfo({ data, email, page, classesJoined }) {
     fetchData();
   }, [data, email, page, message]);
   const renderDat = () => {
-    if (page === 'student') {
+    if (page === "student") {
       return (
         <>
           Name: {student.name}
@@ -80,11 +79,12 @@ function MoreInfo({ data, email, page, classesJoined }) {
           <br />
           Classes: {student.classenrolled}
           <br />
-          TotalFee: {totalfee}   <br />
+          TotalFee: {totalfee} <br />
           Fee Due : {totalfee - student.feepaid}
         </>
-      )
-    } if (page === 'teacher') {
+      );
+    }
+    if (page === "teacher") {
       return (
         <>
           Name: {teacher.name}
@@ -99,7 +99,7 @@ function MoreInfo({ data, email, page, classesJoined }) {
           <br />
           Subject: {teacher.subject}
         </>
-      )
+      );
     }
     if (page === "home") {
       console.log(message);
@@ -112,7 +112,7 @@ function MoreInfo({ data, email, page, classesJoined }) {
           Message: {message.message}
           <br />
         </>
-      )
+      );
     }
     if (page === "enrollment") {
       return (
@@ -126,17 +126,20 @@ function MoreInfo({ data, email, page, classesJoined }) {
           Classes: {classesJoined}
           <br />
         </>
-      )
+      );
     }
-  }
+  };
 
   const markfee = async () => {
     try {
-      const result = await axios.post('https://s2sapi.herokuapp.com/student/updatefee', { email: student.email, amount: fees });
+      const result = await axios.post(
+        "https://s2s-bck.onrender.com//student/updatefee",
+        { email: student.email, amount: fees }
+      );
       if (result.status === 200) {
         let st = student;
         st.feepaid = result.data.fees;
-        setStudent(st)
+        setStudent(st);
         handleShow3();
         handleClose2();
       } else {
@@ -147,28 +150,30 @@ function MoreInfo({ data, email, page, classesJoined }) {
     }
     if (page === "teacher") {
       try {
-        const result = await axios.post("https://s2sapi.herokuapp.com/teacher/updateteacher", { email: teacher.email, salary: salary });
+        const result = await axios.post(
+          "https://s2s-bck.onrender.com//teacher/updateteacher",
+          { email: teacher.email, salary: salary }
+        );
         if (result.status === 200) {
           handleShow3();
           handleClose2();
-        }
-        else {
+        } else {
           console.error(result.error);
         }
       } catch (error) {
-        console.error(error.message)
+        console.error(error.message);
       }
     }
-  }
+  };
 
   return (
     <>
       {/* Modal 1 */}
       <Button variant="dark" onClick={handleShow}>
-        {page === 'home' && `Read message`}
-        {page === 'enrollment' && `View Registeration`}
-        {page === 'student' && `More Info`}
-        {page === 'teacher' && `More Info`}
+        {page === "home" && `Read message`}
+        {page === "enrollment" && `View Registeration`}
+        {page === "student" && `More Info`}
+        {page === "teacher" && `More Info`}
       </Button>
 
       <Modal
@@ -178,30 +183,30 @@ function MoreInfo({ data, email, page, classesJoined }) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          {page === 'home' && <Modal.Title>{"Read message"}</Modal.Title>}
-          {page === 'enrollment' && <Modal.Title>{"View Registeration"}</Modal.Title>}
-          {page === 'student' && <Modal.Title>{student.name}</Modal.Title>}
-          {page === 'teacher' && <Modal.Title>{teacher.name}</Modal.Title>}
-
+          {page === "home" && <Modal.Title>{"Read message"}</Modal.Title>}
+          {page === "enrollment" && (
+            <Modal.Title>{"View Registeration"}</Modal.Title>
+          )}
+          {page === "student" && <Modal.Title>{student.name}</Modal.Title>}
+          {page === "teacher" && <Modal.Title>{teacher.name}</Modal.Title>}
         </Modal.Header>
-        <Modal.Body>
-          {renderDat()}
-
-        </Modal.Body>
+        <Modal.Body>{renderDat()}</Modal.Body>
         <Modal.Footer>
-          {page === "home" && message.responded !== true &&
+          {page === "home" && message.responded !== true && (
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-          }
-          {page === "enrollment" && enrollment.responded !== true &&
+          )}
+          {page === "enrollment" && enrollment.responded !== true && (
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-          }
+          )}
           {page === "home" && message.responded === true && `Already seen`}
-          {page === "enrollment" && enrollment.responded === true && `Already seen`}
-          {page === "home" && message.responded === false &&
+          {page === "enrollment" &&
+            enrollment.responded === true &&
+            `Already seen`}
+          {page === "home" && message.responded === false && (
             <Button
               variant="dark"
               onClick={async () => {
@@ -209,13 +214,14 @@ function MoreInfo({ data, email, page, classesJoined }) {
                 //   handleShow2();
                 //   handleClose();
                 // }
-                if (page === 'home') {
+                if (page === "home") {
                   try {
                     const result = await axios.post(
-                      "https://s2sapi.herokuapp.com/contactus/markresponse", { id: message._id, }
+                      "https://s2s-bck.onrender.com//contactus/markresponse",
+                      { id: message._id }
                     );
                     if (result.status === 200) {
-                      handleClose()
+                      handleClose();
                     }
                   } catch (error) {
                     console.log(error.message);
@@ -225,52 +231,52 @@ function MoreInfo({ data, email, page, classesJoined }) {
             >
               Mark as read
             </Button>
-          }
-          {page === "enrollment" && enrollment.responded !== true &&
+          )}
+          {page === "enrollment" && enrollment.responded !== true && (
             <Button
               variant="dark"
-              onClick={async() => {
-               console.log(enrollment);
-                  try {
-                    const resultEnrollment = await axios.post(
-                      "https://s2sapi.herokuapp.com/student/markresponse", { id: enrollment._id, }
-                    );
-                      console.log(resultEnrollment.status)
-                    if (resultEnrollment.status === 200) {
-                      handleClose()
-                    }
-                  } catch (error) {
-                    console.log(error.message);
+              onClick={async () => {
+                console.log(enrollment);
+                try {
+                  const resultEnrollment = await axios.post(
+                    "https://s2s-bck.onrender.com//student/markresponse",
+                    { id: enrollment._id }
+                  );
+                  console.log(resultEnrollment.status);
+                  if (resultEnrollment.status === 200) {
+                    handleClose();
                   }
-                
+                } catch (error) {
+                  console.log(error.message);
+                }
               }}
             >
               Mark as read
             </Button>
-          }
+          )}
 
-          {page === "student" &&
+          {page === "student" && (
             <Button
               variant="dark"
               onClick={async () => {
-                  handleShow2();
-                  handleClose();
+                handleShow2();
+                handleClose();
               }}
             >
               Mark Fee Submission
             </Button>
-          }
-          {page === "teacher" &&
+          )}
+          {page === "teacher" && (
             <Button
               variant="dark"
               onClick={async () => {
-                  handleShow2();
-                  handleClose();
+                handleShow2();
+                handleClose();
               }}
             >
               Mark Salary
             </Button>
-          }
+          )}
         </Modal.Footer>
       </Modal>
 
@@ -283,7 +289,8 @@ function MoreInfo({ data, email, page, classesJoined }) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>{page === "student" && `Marking Fee Submission`}
+          <Modal.Title>
+            {page === "student" && `Marking Fee Submission`}
             {page === "teacher" && `Marking Salary`}
           </Modal.Title>
         </Modal.Header>
@@ -303,8 +310,7 @@ function MoreInfo({ data, email, page, classesJoined }) {
                 onChange={(e) => {
                   if (page === "student") {
                     setfee(e.target.value);
-                  }
-                  else setSalary(e.target.value);
+                  } else setSalary(e.target.value);
                 }}
               />
             </Form.Group>
@@ -340,8 +346,10 @@ function MoreInfo({ data, email, page, classesJoined }) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {page === "student" && `Fee submission has been marked for ${student.name}`}
-          {page === "teacher" && `Salary submission has been marked for {teacher.name}`}
+          {page === "student" &&
+            `Fee submission has been marked for ${student.name}`}
+          {page === "teacher" &&
+            `Salary submission has been marked for {teacher.name}`}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose3}>

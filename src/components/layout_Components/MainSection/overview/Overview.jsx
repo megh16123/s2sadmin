@@ -15,9 +15,11 @@ function Overview(props) {
       setStudentCount(0);
       setTeacherCount(0);
       try {
-        const result = await axios("https://s2sapi.herokuapp.com/student/allcount");
+        const result = await axios(
+          "https://s2s-bck.onrender.com//student/allcount"
+        );
         const result1 = await axios(
-            "https://s2sapi.herokuapp.com/teacher/allcount"
+          "https://s2s-bck.onrender.com//teacher/allcount"
         );
         setTeacherCount(result1.data.count);
         setStudentCount(result.data.count);
@@ -152,7 +154,9 @@ function Overview(props) {
             <i className="fas fa-chalkboard-teacher"></i> Teachers{" "}
             <span className="badge bg-secondary ">{teacherCount}</span>
           </NavLink>
-          {(props.page === "teacher" || props.page === "student") && (<AddRecord page={props.page}/> )}
+          {(props.page === "teacher" || props.page === "student") && (
+            <AddRecord page={props.page} />
+          )}
         </div>
       </div>
       <div className="col-md-9" id="overview">
