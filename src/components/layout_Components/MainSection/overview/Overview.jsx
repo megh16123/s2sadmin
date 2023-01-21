@@ -16,10 +16,10 @@ function Overview(props) {
       setTeacherCount(0);
       try {
         const result = await axios(
-          "https://s2s-bck.onrender.com//student/allcount"
+          "https://s2s-bck.onrender.com/student/allcount"
         );
         const result1 = await axios(
-          "https://s2s-bck.onrender.com//teacher/allcount"
+          "https://s2s-bck.onrender.com/teacher/allcount"
         );
         setTeacherCount(result1.data.count);
         setStudentCount(result.data.count);

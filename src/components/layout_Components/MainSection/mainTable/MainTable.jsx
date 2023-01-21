@@ -26,14 +26,14 @@ function MainTable(props) {
     const fetchData = async () => {
       if (props.page === "teacher") {
         const response = await fetch(
-          "https://s2s-bck.onrender.com//teacher/getteacher"
+          "https://s2s-bck.onrender.com/teacher/getteacher"
         );
         const dat = await response.json();
         setData(dat);
       }
       if (props.page === "student") {
         const response = await fetch(
-          "https://s2s-bck.onrender.com//student/studentdata"
+          "https://s2s-bck.onrender.com/student/studentdata"
         );
         const dat = await response.json();
         const d = dat.map((item) => {
@@ -49,14 +49,14 @@ function MainTable(props) {
       }
       if (props.page === "home") {
         const response = await fetch(
-          "https://s2s-bck.onrender.com//contactus/getcontacts"
+          "https://s2s-bck.onrender.com/contactus/getcontacts"
         );
         const dat = await response.json();
         setData(dat);
       }
       if (props.page === "enrollment") {
         const response = await fetch(
-          "https://s2s-bck.onrender.com//student/getenrolled"
+          "https://s2s-bck.onrender.com/student/getenrolled"
         );
         const dat = await response.json();
         setData(dat);

@@ -64,7 +64,7 @@ function RemoveModals(props) {
     if (props.page === "student") {
       try {
         const result = await axios.post(
-          "https://s2s-bck.onrender.com//student/deletestudent",
+          "https://s2s-bck.onrender.com/student/deletestudent",
           { email: props.data.email }
         );
         if (result.status === 200) {
@@ -78,7 +78,7 @@ function RemoveModals(props) {
     if (props.page === "teacher") {
       try {
         const result = await axios.post(
-          "https://s2s-bck.onrender.com//teacher/deleteteacher",
+          "https://s2s-bck.onrender.com/teacher/deleteteacher",
           { email: props.data.email }
         );
         if (result.status === 200) {
@@ -92,7 +92,7 @@ function RemoveModals(props) {
     if (props.page === "home") {
       try {
         const result = await axios.post(
-          "https://s2s-bck.onrender.com//contactus/deletecontact",
+          "https://s2s-bck.onrender.com/contactus/deletecontact",
           { id: props.data._id }
         );
         if (result.status === 200) {
@@ -106,7 +106,7 @@ function RemoveModals(props) {
     if (props.page === "enrollment") {
       try {
         const result = await axios.post(
-          "https://s2s-bck.onrender.com//student/deleteenrolled",
+          "https://s2s-bck.onrender.com/student/deleteenrolled",
           { email: props.data.email }
         );
         if (result.status === 200) {

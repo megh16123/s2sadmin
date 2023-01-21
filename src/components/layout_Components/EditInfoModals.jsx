@@ -66,14 +66,14 @@ const EditInfoModals = ({ data, page }) => {
       }
       try {
         const result = await axios.post(
-          "https://s2s-bck.onrender.com//student/update",
+          "https://s2s-bck.onrender.com/student/update",
           data
         );
         if (result.status === 200) {
           const courses = data.classes.split(",");
           courses.forEach(async (course) => {
             const res = await axios.post(
-              "https://s2s-bck.onrender.com//classes/join",
+              "https://s2s-bck.onrender.com/classes/join",
               { email: data.email, class: course }
             );
             if (res.status === 200) {
@@ -93,7 +93,7 @@ const EditInfoModals = ({ data, page }) => {
       }
       try {
         const result = await axios.post(
-          "https://s2s-bck.onrender.com//teacher/updateteacher",
+          "https://s2s-bck.onrender.com/teacher/updateteacher",
           data
         );
         if (result.status === 200) {

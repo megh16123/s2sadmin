@@ -50,14 +50,14 @@ const AddRecord = (props) => {
   const onSubmit = async () => {
     if (props.page === "student") {
       const result = await axios.post(
-        "https://s2s-bck.onrender.com//student/register",
+        "https://s2s-bck.onrender.com/student/register",
         studentFormData
       );
       if (result.status === 200) {
         const courses = studentFormData.classes.split(",");
         courses.forEach(async (course) => {
           const res = await axios.post(
-            "https://s2s-bck.onrender.com//classes/join",
+            "https://s2s-bck.onrender.com/classes/join",
             { email: studentFormData.email, class: course }
           );
         });
@@ -67,7 +67,7 @@ const AddRecord = (props) => {
       handleClose();
     } else {
       const result = await axios.post(
-        "https://s2s-bck.onrender.com//teacher/addteacher",
+        "https://s2s-bck.onrender.com/teacher/addteacher",
         teacherFormData
       );
       console.log(result);

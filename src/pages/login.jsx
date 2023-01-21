@@ -18,7 +18,7 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("https://s2s-bck.onrender.com//admin/login", {
+      .post("https://s2s-bck.onrender.com/admin/login", {
         username: username,
         password: password,
       })

@@ -16,7 +16,7 @@ function Student() {
       const fetchData = async () => {
         try {
           const result = await axios(
-            "https://s2s-bck.onrender.com//admin/getstudentdata"
+            "https://s2s-bck.onrender.com/admin/getstudentdata"
           );
           setData(result.data);
         } catch (error) {

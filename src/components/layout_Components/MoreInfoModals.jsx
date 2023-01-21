@@ -133,7 +133,7 @@ function MoreInfo({ data, email, page, classesJoined }) {
   const markfee = async () => {
     try {
       const result = await axios.post(
-        "https://s2s-bck.onrender.com//student/updatefee",
+        "https://s2s-bck.onrender.com/student/updatefee",
         { email: student.email, amount: fees }
       );
       if (result.status === 200) {
@@ -151,7 +151,7 @@ function MoreInfo({ data, email, page, classesJoined }) {
     if (page === "teacher") {
       try {
         const result = await axios.post(
-          "https://s2s-bck.onrender.com//teacher/updateteacher",
+          "https://s2s-bck.onrender.com/teacher/updateteacher",
           { email: teacher.email, salary: salary }
         );
         if (result.status === 200) {
@@ -217,7 +217,7 @@ function MoreInfo({ data, email, page, classesJoined }) {
                 if (page === "home") {
                   try {
                     const result = await axios.post(
-                      "https://s2s-bck.onrender.com//contactus/markresponse",
+                      "https://s2s-bck.onrender.com/contactus/markresponse",
                       { id: message._id }
                     );
                     if (result.status === 200) {
@@ -239,7 +239,7 @@ function MoreInfo({ data, email, page, classesJoined }) {
                 console.log(enrollment);
                 try {
                   const resultEnrollment = await axios.post(
-                    "https://s2s-bck.onrender.com//student/markresponse",
+                    "https://s2s-bck.onrender.com/student/markresponse",
                     { id: enrollment._id }
                   );
                   console.log(resultEnrollment.status);

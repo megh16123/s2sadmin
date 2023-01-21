@@ -16,7 +16,7 @@ function Enrollment() {
       const fetchData = async () => {
         try {
           const result = await axios(
-            "https://s2s-bck.onrender.com//student/getenrolled"
+            "https://s2s-bck.onrender.com/student/getenrolled"
           );
           setData(result.data);
         } catch (error) {
